@@ -1,0 +1,163 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block templatemo_content %}
+<style type="text/css">
+span:focus {
+    outline: 5px solid blue;
+}
+</style>
+
+
+
+<div style="min-height: 600px;margin-top: 100px;">
+	<form class="cmxform" id="signupForm" method="POST" action="go_registration/">
+		<table style="margin-bottom:10px;margin-left:350px;width:auto;font-size: 15px;height: 300px;background-color: white;padding: 20px;">
+			{% csrf_token %}
+			<tr>
+		    <td>
+		    	<div id="user_type_selector" style="margin-bottom: 80px;">
+		    		<span id="buyer" style="color: black;font-size: 15px;font-family: cursive;float: left;background-color: grey;height: 30px;width: 100px;text-align: center;padding: 5px;" tabindex="-1">
+			         I am Buyer
+			         (Free)<input type="text" id="buyer_id" name="buyer" value="buyer_selected" style="display: none">
+			        </span>
+			        <span id="seller" style="color: black;font-size: 15px;font-family: cursive;float: left;background-color: grey;height: 30px;width: 100px;text-align: center;padding: 5px;margin-left: 50px;" tabindex="-1">
+				       I am Seller (Paid)<input type="text" name="seller" id="seller_id" style="display: none"> 
+			         </span>
+			     </div>
+		    </td>
+	    </tr>
+		<tr>
+			<td>
+				<div style="margin-bottom: 20px;">
+				<span style="color: black;font-size: 15px;font-family: cursive;">Username</span>
+				<span id="check_user"><span> 
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="margin-bottom: 20px;">
+					<input id="username" name="username" type="text" style="width:250px;height:30px;border-color: blue;font-size: 20px;font-family: cursive;">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="margin-bottom: 20px;">
+					<span style="color: black;font-size: 15px;font-family: cursive;">Password</span>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="margin-bottom: 20px;">
+					<input type="password" id="password" name="password" style="width:250px;height:30px;border-color: blue;font-size: 20px;font-family: cursive;">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="margin-bottom: 20px;">
+					  <span style="color: black;font-size: 15px;font-family: cursive;">Confirm Password</span>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="margin-bottom: 20px;">
+					<input type="password" id="confirm_password" name="confirm_password" style="width:250px;height:30px;border-color: blue;font-size: 20px;font-family: cursive;">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="margin-bottom: 20px;">
+					<span><button id="submit" class="submit" type="submit" style="width:250px;height:30px;border-color: blue;font-size: 20px;font-family: cursive;">Sign in as <i id="user_type"></i></button></span>
+					<br/>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="margin-bottom: 20px;">
+					<span style="color: black;font-size: 15px;font-family: cursive;">If you have account <a href="/login" style="color: black;">click here</a></span>
+					<br/>
+				</div>
+			</td>
+		</tr>
+</table>
+	</form>
+</div>
+
+<script type="text/javascript">
+	document.getElementById("buyer_id").required = true;
+	$( document ).ready(function() {
+	$("#buyer").css("outline", "5px solid blue");
+	  $("#seller").css("outline", "none");
+	  $(this).children('#buyer_id').val("buyer_selected");
+	  $(this).parent().children('#seller').children().val("");
+	   $('#user_type').html('Buyer')
+	    document.getElementById("buyer_id").required = true;
+	   document.getElementById("seller_id").required = false;
+});
+	
+	$("#buyer").click(function(){
+		
+	$("#buyer").css("outline", "5px solid blue");
+	  $("#seller").css("outline", "none");
+	  $(this).children('#buyer_id').val("buyer_selected");
+	  $(this).parent().children('#seller').children().val("");
+	   $('#user_type').html('Buyer')
+	     document.getElementById("buyer_id").required = true;
+	   document.getElementById("seller_id").required = false;
+	 
+
+
+
+});
+
+	$("#seller").click(function(){
+	 $("#seller").css("outline", "5px solid blue");
+  $("#buyer").css("outline", "none");
+  $(this).children('#seller_id').val("seller_selected");
+   $(this).parent().children('#buyer').children().val("");
+    $('#user_type').html('Seller')
+      document.getElementById("seller_id").required = true;
+	   document.getElementById("buyer_id").required = false;
+	 
+
+});
+
+$("input").keyup(function(){
+ var username =  $("#username").val();
+  $.ajax({
+  	url: "/check_username/",
+  	type: "GET", // or "get"
+  	data: {'username':username,},
+  	success: function(data) {
+  		console.log(data)
+  		if(data == 'Ok' && username.length >= 6){
+  			$('#check_user').html("<span'><img src='{% static 'images/user_check.png' %}'\
+  			 height='10px' width='10px' /></span>");
+  			$('#submit').show();
+  		}
+  		else if(data == 'Already In Use' && username.length != 0 ){
+  			$('#check_user').html("<span style='color:red;'>"+data +"</span>");
+  			$('#submit').hide();
+  		}
+  		else{
+  			$('#check_user').html("<span style='color:green;'>"+" "+"</span>");
+  			$('#submit').show();
+  		}
+  	}
+  });
+});
+
+
+
+</script>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Book Store Template, Free CSS Template, CSS Website Layout</title>
+    <meta name="keywords" content="Book Store Template, Free CSS Template, CSS Website Layout, CSS, HTML" />
+    <meta name="description" content="Book Store Template, Free CSS Template, Download CSS Website" />
+     <link rel="icon" type="image/x-icon" href="{% static 'images/logo_web.png' %}">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="{% static 'js/lib/jquery.js' %}"></script>
+    <script src="{% static 'js/dist/jquery.validate.js' %}"></script>
+  <script src="{% static 'js/form_validation.js' %}"></script>
+  <style>
+  #commentForm {
+    width: 500px;
+  }
+  #commentForm label {
+    width: 250px;
+  }
+  #commentForm label.error, #commentForm input.submit {
+    margin-left: 253px;
+  }
+  #signupForm {
+    width: 670px;
+  }
+  #signupForm label.error {
+    margin-left: 10px;
+    width: auto;
+    display: inline;
+  }
+  #newsletter_topics label.error {
+    display: none;
+    margin-left: 103px;
+  }
+  </style>
+
+</head>
+
+<body >
+  <div id="templatemo_container">
+    <div id="templatemo_menu">
+      <ul>
+        <li><a href="/" class="current">Home</a></li>
+        <li id="help_click"><a href="/help">Help</a></li>
+        {% if user.is_authenticated %}
+         <li id="help_click"><a href="#" style="margin-left: 500px;">Hi {{ username }}</a></li>
+          <!-- <li id="help_click"><a href="#">Cart <i class="fa fa-shopping-cart"></i></a></li> -->
+         <li id="help_click"><a href="logout/">Logout</a></li>
+         {% else %}
+        <li id="login_click"><a href="/login" style="margin-left: 600px;">Login</a></li>
+        <li id="register_click"><a href="/registration">Register</a></li>
+        {% endif %}
+
+      </ul>
+
+    </div>
+    {% block templatemo_content %}
+    {% endblock %}
+    <div id="templatemo_footer">
+      <a href="subpage.html">Home</a> | 
+      <a href="subpage.html">Search</a> | 
+      <a href="subpage.html">Books</a> | 
+      <a href="#">New Releases</a> | 
+      <a href="#">FAQs</a> | 
+      <a href="#">Contact Us</a>
+      <br /> Copyright © 2048 
+      <a href="#"><strong>Your Company Name</strong></a> | 
+      <a href="http://www.iwebsitetemplate.com" target="_parent">Website Templates</a> by 
+      <a href="http://www.templatemo.com" target="_parent" title="free css templates">Free CSS Templates</a>
+    </div>
+    </div>
+    <div align=center><a href='#'>...........</a></div>
+</body>
+</html>
